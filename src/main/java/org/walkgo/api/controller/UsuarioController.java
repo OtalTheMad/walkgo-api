@@ -17,12 +17,12 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<Usuario> GetAllUsuarios() {
         return _usuarioRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
+    public Usuario GetUsuarioById(@PathVariable Long id) {
         return _usuarioRepository.findById(id).orElse(null);
     }
 }
