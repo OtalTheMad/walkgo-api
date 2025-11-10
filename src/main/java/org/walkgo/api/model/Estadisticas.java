@@ -9,13 +9,13 @@ public class Estadisticas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estadistica")
-    private int id_estadistica;
+    private Integer id_estadistica;
 
-    @Column(name = "id_usuario")
-    private int id_usuario;
+    @Column(name = "id_usuario", nullable = false)
+    private Integer id_usuario;
 
-    @Column(name = "km_recorrido")
-    private int km_recorrido;
+    @Column(name = "km_recorrido", nullable = false)
+    private Integer km_recorrido;
 
     @Column(name = "calorias_quemadas")
     private String calorias_quemadas;

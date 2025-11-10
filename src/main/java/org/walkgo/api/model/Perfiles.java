@@ -10,10 +10,10 @@ public class Perfiles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_perfil")
-    private int id_perfil;
+    private Integer id_perfil;
 
-    @Column(name = "id_usuario")
-    private int id_usuario;
+    @Column(name = "id_usuario", nullable = false)
+    private Integer id_usuario;
 
     @Lob
     @Column(name = "foto")
