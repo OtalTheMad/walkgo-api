@@ -12,7 +12,7 @@ public class UsuarioController {
 
     private final UsuarioRepository _usuarioRepository;
 
-    public UserController(UsuarioRepository _usuarioRepository) {
+    public UsuarioController(UsuarioRepository _usuarioRepository) {
         this._usuarioRepository = _usuarioRepository;
     }
 
