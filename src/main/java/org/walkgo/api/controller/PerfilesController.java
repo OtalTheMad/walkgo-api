@@ -19,14 +19,14 @@ public class PerfilesController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Perfiles>> getAllPerfiles() {
-        List<Perfiles> list = perfilesService.getAllPerfiles();
+    public ResponseEntity<List<Perfiles>> GetAllPerfiles() {
+        List<Perfiles> list = perfilesService.GetAllPerfiles();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Perfiles> getPerfilById(@PathVariable int id) {
-        Optional<Perfiles> perfil = perfilesService.getPerfilById(id);
+    public ResponseEntity<Perfiles> GetPerfilById(@PathVariable int id) {
+        Optional<Perfiles> perfil = perfilesService.GetPerfilById(id);
         return perfil.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
