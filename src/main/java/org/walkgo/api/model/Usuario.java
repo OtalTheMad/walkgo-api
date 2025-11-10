@@ -41,82 +41,73 @@ public class Usuario {
 
     // -------- Getters and Setters --------
 
-    public Long GetId() { 
+    public Long getId() { 
         return _id;
     }
-    public void SetId(Long _id) { 
+    public void setId(Long _id) { 
         this._id = _id;
     }
 
-    public String GetUsuario() {
+    public String getUsuario() {
         return _usuario;
     }
-
-    public void SetUsuario(String _usuario) {
+    public void setUsuario(String _usuario) {
         this._usuario = _usuario;
     }
 
-    public String GetClave() {
+    public String getClave() {
         return _clave;
     }
-
-    public void SetClave(String _clave) {
+    public void setClave(String _clave) {
         this._clave = _clave;
     }
 
-    public Integer GetTotal_Pasos() {
+    public Integer getTotalPasos() {
         return _total_pasos;
     }
-
-    public void SetTotal_Pasos(Integer _total_pasos) {
+    public void setTotalPasos(Integer _total_pasos) {
         this._total_pasos = _total_pasos;
     }
 
-    public Double GetTotal_Distancia_Km() {
+    public Double getTotalDistanciaKm() {
         return _total_distancia_km;
     }
-
-    public void SetTotal_Distancia_Km(Double _total_distancia_km) {
+    public void setTotalDistanciaKm(Double _total_distancia_km) {
         this._total_distancia_km = _total_distancia_km;
     }
 
-    public Integer GetTotal_Pasos_Semanales() {
+    public Integer getTotalPasosSemanales() {
         return _total_pasos_semanales;
     }
-
-    public void SetTotal_Pasos_Semanales(Integer _total_pasos_semanales) {
+    public void setTotalPasosSemanales(Integer _total_pasos_semanales) {
         this._total_pasos_semanales = _total_pasos_semanales;
     }
 
-    public Integer GetRango_Semanal() {
+    public Integer getRangoSemanal() {
         return _rango_semanal;
     }
-
-    public void SetRango_Semanal(Integer _rango_semanal) {
+    public void setRangoSemanal(Integer _rango_semanal) {
         this._rango_semanal = _rango_semanal;
     }
 
-    public LocalDateTime GetCreado_En() {
+    public LocalDateTime getCreadoEn() {
         return _creado_en;
     }
-
-    public void SetCreado_En(LocalDateTime _creado_en) {
+    public void setCreadoEn(LocalDateTime _creado_en) {
         this._creado_en = _creado_en;
     }
 
-    public LocalDateTime GetActualizado_En() {
+    public LocalDateTime getActualizadoEn() {
         return _actualizado_en;
     }
-
-    public void SetActualizado_En(LocalDateTime _actualizado_en) {
+    public void setActualizadoEn(LocalDateTime _actualizado_en) {
         this._actualizado_en = _actualizado_en;
     }
 
-    public Boolean GetEstado() {
+    public Boolean getEstado() {
         return _estado;
     }
-
-    public void SetEstado(Boolean _estado) {
+    public void setEstado(Boolean _estado) {
         this._estado = _estado;
     }
 }
