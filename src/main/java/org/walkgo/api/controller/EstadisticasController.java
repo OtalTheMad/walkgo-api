@@ -30,4 +30,25 @@ public class EstadisticasController {
         return estadistica.map(ResponseEntity::ok)
                           .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PostMapping
+    public Estadisticas CreateEstadistica(@RequestBody Estadisticas estadistica) {
+        return estadisticasRepository.save(estadistica);
+    }
+
+    @PutMapping("/{id}")
+    public Estadisticas UpdateEstadistica(@PathVariable int id, @RequestBody Estadisticas estadisticaDetails) {
+        return estadisticasRepository.findById(id).map(estadistica -> {
+            estadistica.setId_usuario(estadisticaDetails.getId_usuario());
+            estadistica.setKm_recorrido(estadisticaDetails.getKm_recorrido());
+            estadistica.setCalorias_quemadas(estadisticaDetails.getCalorias_quemadas());
+            estadistica.setClasificacion(estadisticaDetails.getClasificacion());
+            estadistica.setEstado(estadisticaDetails.getEstado());
+            return estadisticasRepository.save(estadistica);
+        }).orElseGet(() -> {
+            estadisticaDetails.setId_estadistica(id);
+            return estadisticasRepository.save(estadisticaDetails);
+        });
+    }
+
 }

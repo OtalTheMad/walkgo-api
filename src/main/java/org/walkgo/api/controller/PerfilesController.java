@@ -29,4 +29,26 @@ public class PerfilesController {
         Optional<Perfiles> perfil = perfilesService.GetPerfilById(id);
         return perfil.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PostMapping
+    public Perfiles CreatePerfil(@RequestBody Perfiles perfil) {
+        return perfilesRepository.save(perfil);
+    }
+
+    @PutMapping("/{id}")
+    public Perfiles UpdatePerfil(@PathVariable int id, @RequestBody Perfiles perfilDetails) {
+        return perfilesRepository.findById(id).map(perfil -> {
+            perfil.setId_usuario(perfilDetails.getId_usuario());
+            perfil.setFoto(perfilDetails.getFoto());
+            perfil.setPais(perfilDetails.getPais());
+            perfil.setBiografia(perfilDetails.getBiografia());
+            perfil.setFecha_nac(perfilDetails.getFecha_nac());
+            perfil.setEstado(perfilDetails.getEstado());
+            return perfilesRepository.save(perfil);
+        }).orElseGet(() -> {
+            perfilDetails.setId_perfil(id);
+            return perfilesRepository.save(perfilDetails);
+        });
+    }
+
 }
