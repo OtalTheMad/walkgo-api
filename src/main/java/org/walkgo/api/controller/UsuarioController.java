@@ -4,6 +4,7 @@ import org.walkgo.api.model.Usuario;
 import org.walkgo.api.repository.UsuarioRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public Usuario GetUsuarioById(@PathVariable Long id) {
+    public Usuario GetUsuarioById(@PathVariable Integer id) {
         return _usuarioRepository.findById(id).orElse(null);
     }
 
@@ -32,19 +33,19 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public Usuario UpdateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioDetails) {
+    public Usuario UpdateUsuario(@PathVariable Integer id, @RequestBody Usuario usuarioDetails) {
         return _usuarioRepository.findById(id).map(usuario -> {
-            usuario.SetUsuario(usuarioDetails.GetUsuario());
-            usuario.SetClave(usuarioDetails.GetClave());
-            usuario.SetTotal_Pasos(usuarioDetails.GetTotal_Pasos());
-            usuario.SetTotal_Distancia_Km(usuarioDetails.GetTotal_Distancia_Km());
-            usuario.SetTotal_Pasos_Semanales(usuarioDetails.GetTotal_Pasos_Semanales());
-            usuario.SetRango_Semanal(usuarioDetails.GetRango_Semanal());
-            usuario.SetEstado(usuarioDetails.GetEstado());
-            usuario.SetActualizado_En(LocalDateTime.now());
+            usuario.setUsuario(usuarioDetails.getUsuario());
+            usuario.setClave(usuarioDetails.getClave());
+            usuario.setTotalPasos(usuarioDetails.getTotalPasos());
+            usuario.setTotalDistanciaKm(usuarioDetails.getTotalDistanciaKm());
+            usuario.setTotalPasosSemanales(usuarioDetails.getTotalPasosSemanales());
+            usuario.setRangoSemanal(usuarioDetails.getRangoSemanal());
+            usuario.setEstado(usuarioDetails.getEstado());
+            usuario.setActualizadoEn(LocalDateTime.now());
             return _usuarioRepository.save(usuario);
         }).orElseGet(() -> {
-            usuarioDetails.SetId(id);
+            usuarioDetails.setId(id);
             return _usuarioRepository.save(usuarioDetails);
         });
     }
