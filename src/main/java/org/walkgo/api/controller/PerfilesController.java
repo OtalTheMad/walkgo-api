@@ -2,7 +2,6 @@ package org.walkgo.api.controller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.walkgo.api.model.Perfiles;
@@ -20,35 +19,25 @@ public class PerfilesController {
 
     @GetMapping
     public ResponseEntity<List<Perfiles>> GetAllPerfiles() {
-        List<Perfiles> list = perfilesService.GetAllPerfiles();
-        return ResponseEntity.ok(list);
+        List<Perfiles> _list = perfilesService.GetAllPerfiles();
+        return ResponseEntity.ok(_list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Perfiles> GetPerfilById(@PathVariable int id) {
-        Optional<Perfiles> perfil = perfilesService.GetPerfilById(id);
-        return perfil.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Perfiles> GetPerfilById(@PathVariable Integer id) {
+        Optional<Perfiles> _perfil = perfilesService.GetPerfilById(id);
+        return _perfil.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Perfiles CreatePerfil(@RequestBody Perfiles perfil) {
-        return perfilesRepository.save(perfil);
+    public ResponseEntity<Perfiles> CreatePerfil(@RequestBody Perfiles _perfil) {
+        Perfiles _saved = perfilesService.SavePerfil(_perfil);
+        return ResponseEntity.ok(_saved);
     }
 
     @PutMapping("/{id}")
-    public Perfiles UpdatePerfil(@PathVariable int id, @RequestBody Perfiles perfilDetails) {
-        return perfilesRepository.findById(id).map(perfil -> {
-            perfil.setId_usuario(perfilDetails.getId_usuario());
-            perfil.setFoto(perfilDetails.getFoto());
-            perfil.setPais(perfilDetails.getPais());
-            perfil.setBiografia(perfilDetails.getBiografia());
-            perfil.setFecha_nac(perfilDetails.getFecha_nac());
-            perfil.setEstado(perfilDetails.getEstado());
-            return perfilesRepository.save(perfil);
-        }).orElseGet(() -> {
-            perfilDetails.setId_perfil(id);
-            return perfilesRepository.save(perfilDetails);
-        });
+    public ResponseEntity<Perfiles> UpdatePerfil(@PathVariable Integer id, @RequestBody Perfiles _details) {
+        Perfiles _updated = perfilesService.UpdatePerfil(id, _details);
+        return ResponseEntity.ok(_updated);
     }
-
 }

@@ -2,7 +2,6 @@ package org.walkgo.api.controller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.walkgo.api.model.Estadisticas;
@@ -19,36 +18,26 @@ public class EstadisticasController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Estadisticas>> getAllEstadisticas() {
-        List<Estadisticas> list = estadisticasService.getAllEstadisticas();
-        return ResponseEntity.ok(list);
+    public ResponseEntity<List<Estadisticas>> GetAllEstadisticas() {
+        List<Estadisticas> _list = estadisticasService.GetAllEstadisticas();
+        return ResponseEntity.ok(_list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Estadisticas> getEstadisticaById(@PathVariable int id) {
-        Optional<Estadisticas> estadistica = estadisticasService.getEstadisticaById(id);
-        return estadistica.map(ResponseEntity::ok)
-                          .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Estadisticas> GetEstadisticaById(@PathVariable Integer id) {
+        Optional<Estadisticas> _estadistica = estadisticasService.GetEstadisticaById(id);
+        return _estadistica.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Estadisticas CreateEstadistica(@RequestBody Estadisticas estadistica) {
-        return estadisticasRepository.save(estadistica);
+    public ResponseEntity<Estadisticas> CreateEstadistica(@RequestBody Estadisticas _estadistica) {
+        Estadisticas _saved = estadisticasService.SaveEstadistica(_estadistica);
+        return ResponseEntity.ok(_saved);
     }
 
     @PutMapping("/{id}")
-    public Estadisticas UpdateEstadistica(@PathVariable int id, @RequestBody Estadisticas estadisticaDetails) {
-        return estadisticasRepository.findById(id).map(estadistica -> {
-            estadistica.setId_usuario(estadisticaDetails.getId_usuario());
-            estadistica.setKm_recorrido(estadisticaDetails.getKm_recorrido());
-            estadistica.setCalorias_quemadas(estadisticaDetails.getCalorias_quemadas());
-            estadistica.setClasificacion(estadisticaDetails.getClasificacion());
-            estadistica.setEstado(estadisticaDetails.getEstado());
-            return estadisticasRepository.save(estadistica);
-        }).orElseGet(() -> {
-            estadisticaDetails.setId_estadistica(id);
-            return estadisticasRepository.save(estadisticaDetails);
-        });
+    public ResponseEntity<Estadisticas> UpdateEstadistica(@PathVariable Integer id, @RequestBody Estadisticas _details) {
+        Estadisticas _updated = estadisticasService.UpdateEstadistica(id, _details);
+        return ResponseEntity.ok(_updated);
     }
-
 }
