@@ -6,16 +6,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 @Service
 public class JwtService {
 
-    @Value("${spring.security.jwt.secret}")
-    private String secret;
+    private final Key signKey;
 
-    private Key GetSignKey() {
-        return Keys.hmacShaKeyFor(secret.getBytes());
+    public JwtService(@Value("${spring.security.jwt.secret}") String secret) {
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException("JWT secret is missing or empty. Check environment variable 'JWT_SECRET'.");
+        }
+        this.signKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String GenerateToken(UserDetails userDetails) {
@@ -23,13 +26,13 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(GetSignKey(), SignatureAlgorithm.HS256)
+                .signWith(signKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String ExtractUsername(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(GetSignKey())
+                .setSigningKey(signKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -38,12 +41,12 @@ public class JwtService {
 
     public boolean IsTokenValid(String token, UserDetails userDetails) {
         String _username = ExtractUsername(token);
-        return (_username.equals(userDetails.getUsername()) && !IsTokenExpired(token));
+        return _username.equals(userDetails.getUsername()) && !IsTokenExpired(token);
     }
 
     private boolean IsTokenExpired(String token) {
         Date _exp = Jwts.parserBuilder()
-                .setSigningKey(GetSignKey())
+                .setSigningKey(signKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()

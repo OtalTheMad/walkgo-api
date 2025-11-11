@@ -28,24 +28,23 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        String _authHeader = request.getHeader("Authorization");
-        if (_authHeader == null || !_authHeader.startsWith("Bearer ")) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
         }
 
-        String _token = _authHeader.substring(7);
-        String _username = jwtService.ExtractUsername(_token);
-        if (_username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            var _userDetails = userDetailsService.loadUserByUsername(_username);
-            if (jwtService.IsTokenValid(_token, _userDetails)) {
-                var _authToken = new UsernamePasswordAuthenticationToken(
-                        _userDetails, null, _userDetails.getAuthorities());
-                _authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(_authToken);
+        String token = authHeader.substring(7);
+        String username = jwtService.ExtractUsername(token);
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            var userDetails = userDetailsService.loadUserByUsername(username);
+            if (jwtService.IsTokenValid(token, userDetails)) {
+                var authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-
         chain.doFilter(request, response);
     }
 }
