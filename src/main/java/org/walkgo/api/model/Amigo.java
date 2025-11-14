@@ -3,53 +3,55 @@ package org.walkgo.api.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "amigos",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_usuario_amigo"}))
+@Table(
+    name = "amigos",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_usuario_amigo"})
+)
 public class Amigo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_amigo")
-    private Integer id_amigo;
+    private Integer idAmigo;
 
     @Column(name = "id_usuario", nullable = false)
-    private Integer id_usuario;
+    private Integer idUsuario;
 
     @Column(name = "id_usuario_amigo", nullable = false)
-    private Integer id_usuario_amigo;
+    private Integer idUsuarioAmigo;
 
     @Column(name = "estado", nullable = false)
     private String estado = "activo";
 
-    public Integer GetId_Amigo() {
-        return id_amigo;
+    public Integer getIdAmigo() {
+        return idAmigo;
     }
 
-    public void SetId_Amigo(Integer id_amigo) {
-        this.id_amigo = id_amigo;
+    public void setIdAmigo(Integer idAmigo) {
+        this.idAmigo = idAmigo;
     }
 
-    public Integer GetId_Usuario() {
-        return id_usuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void SetId_Usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public Integer GetId_Usuario_Amigo() {
-        return id_usuario_amigo;
+    public Integer getIdUsuarioAmigo() {
+        return idUsuarioAmigo;
     }
 
-    public void SetId_Usuario_Amigo(Integer id_usuario_amigo) {
-        this.id_usuario_amigo = id_usuario_amigo;
+    public void setIdUsuarioAmigo(Integer idUsuarioAmigo) {
+        this.idUsuarioAmigo = idUsuarioAmigo;
     }
 
-    public String GetEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void SetEstado(String estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 }
