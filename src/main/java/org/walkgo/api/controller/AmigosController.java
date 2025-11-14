@@ -27,7 +27,8 @@ public class AmigosController {
     @GetMapping("/{id}")
     public ResponseEntity<Amigo> GetAmigoById(@PathVariable Integer id) {
         Optional<Amigo> _amigo = amigosService.GetAmigoById(id);
-        return _amigo.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return _amigo.map(ResponseEntity::ok)
+                     .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/usuario/{idUsuario}")
