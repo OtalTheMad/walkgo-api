@@ -32,23 +32,28 @@ public class AmigoService {
     }
 
     public Amigo CreateAmigo(Amigo _amigo) {
+
+        if (_amigo.GetId_Usuario().equals(_amigo.GetId_Usuario_Amigo())) {
+            throw new IllegalArgumentException("Un usuario no puede agregarse a sí mismo como amigo.");
+        }
+
         return amigoRepository.save(_amigo);
     }
 
     public Amigo UpdateAmigo(Integer _id, Amigo _details) {
+
+        if (_details.GetId_Usuario().equals(_details.GetId_Usuario_Amigo())) {
+            throw new IllegalArgumentException("Un usuario no puede agregarse a sí mismo como amigo.");
+        }
+
         return amigoRepository.findById(_id).map(_amigo -> {
-
-            _amigo.setIdUsuario(_details.getIdUsuario());
-            _amigo.setIdUsuarioAmigo(_details.getIdUsuarioAmigo());
-            _amigo.setEstado(_details.getEstado());
-
+            _amigo.SetId_Usuario(_details.GetId_Usuario());
+            _amigo.SetId_Usuario_Amigo(_details.GetId_Usuario_Amigo());
+            _amigo.SetEstado(_details.GetEstado());
             return amigoRepository.save(_amigo);
-
         }).orElseGet(() -> {
-
-            _details.setIdAmigo(_id);
+            _details.SetId_Amigo(_id);
             return amigoRepository.save(_details);
-
         });
     }
 }
