@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AmigoRepository extends JpaRepository<Amigo, Integer> {
-    List<Amigo> findByIdUsuario(Integer idUsuario);
+    List<Amigo> findByIdUsuario(Integer id_usuario);
 }
