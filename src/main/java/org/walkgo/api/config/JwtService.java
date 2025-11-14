@@ -1,24 +1,26 @@
 package org.walkgo.api.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import java.util.*;
+
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Date;
 
 @Service
 public class JwtService {
 
     private final Key signKey;
 
-    public JwtService(@Value("${spring.security.jwt.secret}") String secret) {
-        if (secret == null || secret.isBlank()) {
-            throw new IllegalStateException("JWT secret is missing or empty. Check environment variable 'JWT_SECRET'.");
+    public JwtService() {
+        String _secret = System.getenv("JWT_SECRET");
+        if (_secret == null || _secret.isBlank()) {
+            throw new IllegalStateException("JWT_SECRET environment variable is missing or empty.");
         }
-        this.signKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.signKey = Keys.hmacShaKeyFor(_secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String GenerateToken(UserDetails userDetails) {
