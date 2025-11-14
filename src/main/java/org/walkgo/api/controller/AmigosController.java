@@ -1,7 +1,7 @@
 package org.walkgo.api.controller;
 
 import org.walkgo.api.model.Amigo;
-import org.walkgo.api.service.AmigosService;
+import org.walkgo.api.service.AmigoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,9 @@ import java.util.Optional;
 @RequestMapping("/api/amigos")
 public class AmigosController {
 
-    private final AmigosService amigosService;
+    private final AmigoService amigosService;
 
-    public AmigosController(AmigosService amigosService) {
+    public AmigosController(AmigoService amigosService) {
         this.amigosService = amigosService;
     }
 
