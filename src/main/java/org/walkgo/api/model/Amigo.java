@@ -3,7 +3,9 @@ package org.walkgo.api.model;
 import jakarta.persistence.*;
 
 @Entity
-
+@Table(
+    name = "amigos"
+)
 public class Amigo {
 
     @Id
