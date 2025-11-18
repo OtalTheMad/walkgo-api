@@ -3,10 +3,7 @@ package org.walkgo.api.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(
-    name = "amigos",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_usuario_amigo"})
-)
+
 public class Amigo {
 
     @Id
