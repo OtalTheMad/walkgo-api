@@ -10,13 +10,13 @@ public class Amigo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_amigo")
+    @Column(name = "id_seg")
     private Integer idAmigo;
 
     @Column(name = "id_usuario", nullable = false)
     private Integer idUsuario;
 
-    @Column(name = "id_usuario_amigo", nullable = false)
+    @Column(name = "id_seguido", nullable = false)
     private Integer idUsuarioAmigo;
 
     @Column(name = "estado", nullable = false)
