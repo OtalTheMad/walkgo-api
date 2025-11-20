@@ -20,7 +20,7 @@ public class Amigo {
     private Integer idUsuarioAmigo;
 
     @Column(name = "estado", nullable = false)
-    private String estado = "activo";
+    private String estado = "siguiendo";
 
     public Integer getIdAmigo() {
         return idAmigo;

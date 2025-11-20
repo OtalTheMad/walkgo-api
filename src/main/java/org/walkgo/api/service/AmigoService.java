@@ -2,8 +2,11 @@ package org.walkgo.api.service;
 
 import org.springframework.stereotype.Service;
 import org.walkgo.api.model.Amigo;
+import org.walkgo.api.model.Usuario;
 import org.walkgo.api.repository.AmigoRepository;
+import org.walkgo.api.repository.UsuarioRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +14,11 @@ import java.util.Optional;
 public class AmigoService {
 
     private final AmigoRepository amigoRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public AmigoService(AmigoRepository amigoRepository) {
+    public AmigoService(AmigoRepository amigoRepository, UsuarioRepository usuarioRepository) {
         this.amigoRepository = amigoRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public List<Amigo> GetAllAmigos() {
@@ -25,8 +30,25 @@ public class AmigoService {
     }
 
     public List<Amigo> GetAmigosByUsuario(Integer _idUsuario) {
-        List<Amigo> _list = amigoRepository.findByIdUsuario(_idUsuario);
-        return _list;
+        List<Usuario> _usuarios = usuarioRepository.FindAllExceptId(_idUsuario);
+        List<Amigo> _resultado = new ArrayList<>();
+
+        for (Usuario _usuario : _usuarios) {
+            Optional<Amigo> _existingOpt =
+                    amigoRepository.findByIdUsuarioAndIdUsuarioAmigo(_idUsuario, _usuario.getId());
+
+            if (_existingOpt.isPresent()) {
+                _resultado.add(_existingOpt.get());
+            } else {
+                Amigo _nuevo = new Amigo();
+                _nuevo.setIdUsuario(_idUsuario);
+                _nuevo.setIdUsuarioAmigo(_usuario.getId());
+                _nuevo.setEstado("no_siguiendo");
+                _resultado.add(_nuevo);
+            }
+        }
+
+        return _resultado;
     }
 
     public Amigo CreateAmigo(Amigo _amigo) {
@@ -49,15 +71,15 @@ public class AmigoService {
             Amigo _existing = _existingOpt.get();
             String _estadoActual = _existing.getEstado();
 
-            if ("activo".equals(_estadoActual)) {
+            if ("siguiendo".equals(_estadoActual)) {
                 return _existing;
             }
 
-            _existing.setEstado("activo");
+            _existing.setEstado("siguiendo");
             return amigoRepository.save(_existing);
         }
 
-        _amigo.setEstado("activo");
+        _amigo.setEstado("siguiendo");
         return amigoRepository.save(_amigo);
     }
 
