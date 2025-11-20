@@ -27,7 +27,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> Login(@RequestBody LoginRequest loginRequest) {
-        Usuario _usuario = usuarioRepository.findByUsuario(loginRequest.getUsername())
+        Usuario _usuario = usuarioRepository.FindByUsuario(loginRequest.getUsername())
                 .orElse(null);
         if (_usuario == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
