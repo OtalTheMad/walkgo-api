@@ -24,12 +24,20 @@ public class JwtService {
     }
 
     public String GenerateToken(UserDetails userDetails) {
-        return Jwts.builder()
+        return GenerateToken(userDetails, null);
+    }
+
+    public String GenerateToken(UserDetails userDetails, Integer idUsuario) {
+        Date _now = new Date(System.currentTimeMillis());
+        Date _exp = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24);
+        var _builder = Jwts.builder()
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(signKey, SignatureAlgorithm.HS256)
-                .compact();
+                .setIssuedAt(_now)
+                .setExpiration(_exp);
+        if (idUsuario != null) {
+            _builder.claim("id_usuario", idUsuario);
+        }
+        return _builder.signWith(signKey, SignatureAlgorithm.HS256).compact();
     }
 
     public String ExtractUsername(String token) {
