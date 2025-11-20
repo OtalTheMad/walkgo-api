@@ -2,6 +2,7 @@ package org.walkgo.api.controller;
 
 import org.walkgo.api.model.Usuario;
 import org.walkgo.api.repository.UsuarioRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -50,4 +51,11 @@ public class UsuarioController {
         });
     }
 
+    @GetMapping("/disponibles")
+    public List<Usuario> GetUsuariosDisponibles(Authentication authentication) {
+        String _username = authentication.getName();
+        Usuario _actual = _usuarioRepository.FindByUsuario(_username)
+                .orElseThrow(() -> new RuntimeException("Usuario autenticado no encontrado."));
+        return _usuarioRepository.FindAllExceptId(_actual.getId());
+    }
 }
