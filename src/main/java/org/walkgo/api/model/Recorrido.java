@@ -10,53 +10,53 @@ public class Recorrido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer _id;
+    private Integer id;
 
     @Column(name = "id_usuario", nullable = false)
-    private Integer _idUsuario;
+    private Integer idUsuario;
 
     @Column(name = "distancia_km", nullable = false)
-    private Double _distanciaKm;
+    private Double distanciaKm;
 
     @Column(name = "pasos", nullable = false)
-    private Integer _pasos;
+    private Integer pasos;
 
     @Column(name = "fecha", nullable = false)
-    private LocalDateTime _fecha;
+    private LocalDateTime fecha;
 
-    public Integer getId() {
-        return _id;
+    public Integer GetId() {
+        return id;
     }
 
-    public Integer getIdUsuario() {
-        return _idUsuario;
+    public Integer GetIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdUsuario(Integer _idUsuario) {
-        this._idUsuario = _idUsuario;
+    public void SetIdUsuario(Integer _idUsuario) {
+        idUsuario = _idUsuario;
     }
 
-    public Double getDistanciaKm() {
-        return _distanciaKm;
+    public Double GetDistanciaKm() {
+        return distanciaKm;
     }
 
-    public void setDistanciaKm(Double _distanciaKm) {
-        this._distanciaKm = _distanciaKm;
+    public void SetDistanciaKm(Double _distanciaKm) {
+        distanciaKm = _distanciaKm;
     }
 
-    public Integer getPasos() {
-        return _pasos;
+    public Integer GetPasos() {
+        return pasos;
     }
 
-    public void setPasos(Integer _pasos) {
-        this._pasos = _pasos;
+    public void SetPasos(Integer _pasos) {
+        pasos = _pasos;
     }
 
-    public LocalDateTime getFecha() {
-        return _fecha;
+    public LocalDateTime GetFecha() {
+        return fecha;
     }
 
-    public void setFecha(LocalDateTime _fecha) {
-        this._fecha = _fecha;
+    public void SetFecha(LocalDateTime _fecha) {
+        fecha = _fecha;
     }
 }
