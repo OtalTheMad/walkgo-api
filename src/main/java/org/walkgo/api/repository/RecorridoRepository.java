@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RecorridoRepository extends JpaRepository<Recorrido, Integer> {
-    List<Recorrido> findByIdUsuarioAndFechaBetween(Integer idUsuario, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    List<Recorrido> findByIdUsuarioAndFechaBetween(Integer _idUsuario, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 }
