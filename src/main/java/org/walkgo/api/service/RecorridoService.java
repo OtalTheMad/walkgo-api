@@ -89,4 +89,20 @@ public class RecorridoService {
 
         return usuarioRepository.save(_usuario);
     }
+
+    public List<Recorrido> GetRecorridosSemana(Integer _idUsuario) {
+
+        LocalDate _hoy = LocalDate.now();
+        LocalDate _inicioSemana = _hoy.with(DayOfWeek.MONDAY);
+        LocalDate _finSemana = _inicioSemana.plusDays(6);
+
+        LocalDateTime _inicio = _inicioSemana.atStartOfDay();
+        LocalDateTime _fin = _finSemana.atTime(23, 59, 59);
+
+        return recorridoRepository.findByIdUsuarioAndFechaBetween(
+                _idUsuario,
+                _inicio,
+                _fin
+        );
+    }
 }

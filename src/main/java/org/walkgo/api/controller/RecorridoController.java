@@ -2,8 +2,11 @@ package org.walkgo.api.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.walkgo.api.model.FinalizarRecorridoRequest;
+import org.walkgo.api.model.Recorrido;
 import org.walkgo.api.model.Usuario;
 import org.walkgo.api.service.RecorridoService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -21,5 +24,12 @@ public class RecorridoController {
             @RequestBody FinalizarRecorridoRequest _req
     ) {
         return recorridoService.FinalizarRecorrido(_idUsuario, _req);
+    }
+
+    @GetMapping("/{id}/recorridos/semana")
+    public List<Recorrido> GetRecorridosSemana(
+            @PathVariable("id") Integer _idUsuario
+    ) {
+        return recorridoService.GetRecorridosSemana(_idUsuario);
     }
 }
