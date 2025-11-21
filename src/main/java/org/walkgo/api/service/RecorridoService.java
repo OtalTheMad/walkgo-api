@@ -23,86 +23,86 @@ public class RecorridoService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario FinalizarRecorrido(Integer _idUsuario, FinalizarRecorridoRequest _req) {
+    public Usuario finalizarRecorrido(Integer idUsuario, FinalizarRecorridoRequest req) {
 
-        Usuario _usuario = usuarioRepository.findById(_idUsuario)
+        Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        Double _distanciaSesion = _req.GetDistanciaSesionKm();
-        if (_distanciaSesion == null) {
-            _distanciaSesion = 0.0;
+        Double distanciaSesion = req.GetDistanciaSesionKm();
+        if (distanciaSesion == null) {
+            distanciaSesion = 0.0;
         }
 
-        Integer _pasosSesion = _req.GetPasosSesion();
-        if (_pasosSesion == null) {
-            _pasosSesion = 0;
+        Integer pasosSesion = req.GetPasosSesion();
+        if (pasosSesion == null) {
+            pasosSesion = 0;
         }
 
-        Recorrido _recorrido = new Recorrido();
-        _recorrido.SetIdUsuario(_idUsuario);
-        _recorrido.SetDistanciaKm(_distanciaSesion);
-        _recorrido.SetPasos(_pasosSesion);
-        _recorrido.SetFecha(LocalDateTime.now());
-        recorridoRepository.save(_recorrido);
+        Recorrido recorrido = new Recorrido();
+        recorrido.setIdUsuario(idUsuario);
+        recorrido.setDistanciaKm(distanciaSesion);
+        recorrido.setPasos(pasosSesion);
+        recorrido.setFecha(LocalDateTime.now());
+        recorridoRepository.save(recorrido);
 
-        Double _totalDistanciaActual = _usuario.getTotalDistanciaKm();
-        if (_totalDistanciaActual == null) {
-            _totalDistanciaActual = 0.0;
+        Double totalDistanciaActual = usuario.getTotalDistanciaKm();
+        if (totalDistanciaActual == null) {
+            totalDistanciaActual = 0.0;
         }
-        _usuario.setTotalDistanciaKm(_totalDistanciaActual + _distanciaSesion);
+        usuario.setTotalDistanciaKm(totalDistanciaActual + distanciaSesion);
 
-        Integer _totalPasosActual = _usuario.getTotalPasos();
-        if (_totalPasosActual == null) {
-            _totalPasosActual = 0;
+        Integer totalPasosActual = usuario.getTotalPasos();
+        if (totalPasosActual == null) {
+            totalPasosActual = 0;
         }
-        _usuario.setTotalPasos(_totalPasosActual + _pasosSesion);
+        usuario.setTotalPasos(totalPasosActual + pasosSesion);
 
-        Integer _totalPasosSemanaActual = _usuario.getTotalPasosSemanales();
-        if (_totalPasosSemanaActual == null) {
-            _totalPasosSemanaActual = 0;
+        Integer totalPasosSemanaActual = usuario.getTotalPasosSemanales();
+        if (totalPasosSemanaActual == null) {
+            totalPasosSemanaActual = 0;
         }
-        _usuario.setTotalPasosSemanales(_totalPasosSemanaActual + _pasosSesion);
+        usuario.setTotalPasosSemanales(totalPasosSemanaActual + pasosSesion);
 
-        LocalDate _hoy = LocalDate.now();
-        LocalDate _inicioSemana = _hoy.with(DayOfWeek.MONDAY);
-        LocalDate _finSemana = _inicioSemana.plusDays(6);
+        LocalDate hoy = LocalDate.now();
+        LocalDate inicioSemana = hoy.with(DayOfWeek.MONDAY);
+        LocalDate finSemana = inicioSemana.plusDays(6);
 
-        LocalDateTime _inicio = _inicioSemana.atStartOfDay();
-        LocalDateTime _fin = _finSemana.atTime(23, 59, 59);
+        LocalDateTime inicio = inicioSemana.atStartOfDay();
+        LocalDateTime fin = finSemana.atTime(23, 59, 59);
 
-        List<Recorrido> _recorridosSemana = recorridoRepository.findByIdUsuarioAndFechaBetween(
-                _idUsuario,
-                _inicio,
-                _fin
+        List<Recorrido> recorridosSemana = recorridoRepository.findByIdUsuarioAndFechaBetween(
+                idUsuario,
+                inicio,
+                fin
         );
 
-        double _sumaKmSemana = 0.0;
-        for (Recorrido _r : _recorridosSemana) {
-            if (_r.GetDistanciaKm() != null) {
-                _sumaKmSemana += _r.GetDistanciaKm();
+        double sumaKmSemana = 0.0;
+        for (Recorrido r : recorridosSemana) {
+            if (r.getDistanciaKm() != null) {
+                sumaKmSemana += r.getDistanciaKm();
             }
         }
 
-        int _rangoSemanal = (int) Math.round(_sumaKmSemana);
-        _usuario.setRangoSemanal(_rangoSemanal);
-        _usuario.setActualizadoEn(LocalDateTime.now());
+        int rangoSemanal = (int) Math.round(sumaKmSemana);
+        usuario.setRangoSemanal(rangoSemanal);
+        usuario.setActualizadoEn(LocalDateTime.now());
 
-        return usuarioRepository.save(_usuario);
+        return usuarioRepository.save(usuario);
     }
 
-    public List<Recorrido> GetRecorridosSemana(Integer _idUsuario) {
+    public List<Recorrido> getRecorridosSemana(Integer idUsuario) {
 
-        LocalDate _hoy = LocalDate.now();
-        LocalDate _inicioSemana = _hoy.with(DayOfWeek.MONDAY);
-        LocalDate _finSemana = _inicioSemana.plusDays(6);
+        LocalDate hoy = LocalDate.now();
+        LocalDate inicioSemana = hoy.with(DayOfWeek.MONDAY);
+        LocalDate finSemana = inicioSemana.plusDays(6);
 
-        LocalDateTime _inicio = _inicioSemana.atStartOfDay();
-        LocalDateTime _fin = _finSemana.atTime(23, 59, 59);
+        LocalDateTime inicio = inicioSemana.atStartOfDay();
+        LocalDateTime fin = finSemana.atTime(23, 59, 59);
 
         return recorridoRepository.findByIdUsuarioAndFechaBetween(
-                _idUsuario,
-                _inicio,
-                _fin
+                idUsuario,
+                inicio,
+                fin
         );
     }
 }

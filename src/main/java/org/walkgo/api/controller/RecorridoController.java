@@ -19,17 +19,17 @@ public class RecorridoController {
     }
 
     @PostMapping("/{id}/recorridos/finalizar")
-    public Usuario FinalizarRecorrido(
-            @PathVariable("id") Integer _idUsuario,
-            @RequestBody FinalizarRecorridoRequest _req
+    public Usuario finalizarRecorrido(
+            @PathVariable("id") Integer idUsuario,
+            @RequestBody FinalizarRecorridoRequest req
     ) {
-        return recorridoService.FinalizarRecorrido(_idUsuario, _req);
+        return recorridoService.finalizarRecorrido(idUsuario, req);
     }
 
     @GetMapping("/{id}/recorridos/semana")
-    public List<Recorrido> GetRecorridosSemana(
-            @PathVariable("id") Integer _idUsuario
+    public List<Recorrido> getRecorridosSemana(
+            @PathVariable("id") Integer idUsuario
     ) {
-        return recorridoService.GetRecorridosSemana(_idUsuario);
+        return recorridoService.getRecorridosSemana(idUsuario);
     }
 }
