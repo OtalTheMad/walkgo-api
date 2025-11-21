@@ -24,39 +24,39 @@ public class Recorrido {
     @Column(name = "fecha", nullable = false)
     private LocalDateTime _fecha;
 
-    public Integer GetId() {
+    public Integer getId() {
         return _id;
     }
 
-    public Integer GetIdUsuario() {
+    public Integer getIdUsuario() {
         return _idUsuario;
     }
 
-    public void SetIdUsuario(Integer _idUsuario) {
+    public void setIdUsuario(Integer _idUsuario) {
         this._idUsuario = _idUsuario;
     }
 
-    public Double GetDistanciaKm() {
+    public Double getDistanciaKm() {
         return _distanciaKm;
     }
 
-    public void SetDistanciaKm(Double _distanciaKm) {
+    public void setDistanciaKm(Double _distanciaKm) {
         this._distanciaKm = _distanciaKm;
     }
 
-    public Integer GetPasos() {
+    public Integer getPasos() {
         return _pasos;
     }
 
-    public void SetPasos(Integer _pasos) {
+    public void setPasos(Integer _pasos) {
         this._pasos = _pasos;
     }
 
-    public LocalDateTime GetFecha() {
+    public LocalDateTime getFecha() {
         return _fecha;
     }
 
-    public void SetFecha(LocalDateTime _fecha) {
+    public void setFecha(LocalDateTime _fecha) {
         this._fecha = _fecha;
     }
 }
