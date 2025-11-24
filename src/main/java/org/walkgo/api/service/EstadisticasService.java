@@ -21,7 +21,7 @@ public class EstadisticasService {
     }
 
     public Optional<Estadisticas> GetEstadisticaById(Integer _id) {
-        Optional<Estadisticas> _estadistica = estadisticasRepository.findById(_id);
+        Optional<Estadisticas> _estadistica = estadisticasRepository.findByIdUsuario(_id);
         return _estadistica;
     }
 

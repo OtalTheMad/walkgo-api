@@ -21,7 +21,7 @@ public class PerfilesService {
     }
 
     public Optional<Perfiles> GetPerfilById(Integer _id) {
-        Optional<Perfiles> _perfil = perfilesRepository.findById(_id);
+        Optional<Perfiles> _perfil = perfilesRepository.findByIdUsuario(_id);
         return _perfil;
     }
 
