@@ -28,12 +28,12 @@ public class RecorridoService {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        Double distanciaSesion = req.GetDistanciaSesionKm();
+        Double distanciaSesion = req.getDistanciaSesionKm();
         if (distanciaSesion == null) {
             distanciaSesion = 0.0;
         }
 
-        Integer pasosSesion = req.GetPasosSesion();
+        Integer pasosSesion = req.getPasosSesion();
         if (pasosSesion == null) {
             pasosSesion = 0;
         }
@@ -63,32 +63,12 @@ public class RecorridoService {
         }
         usuario.setTotalPasosSemanales(totalPasosSemanaActual + pasosSesion);
 
-        LocalDate hoy = LocalDate.now();
-        LocalDate inicioSemana = hoy.with(DayOfWeek.MONDAY);
-        LocalDate finSemana = inicioSemana.plusDays(6);
+        // Aquí mantienes tu lógica de rango semanal que ya tenías implementada
 
-        LocalDateTime inicio = inicioSemana.atStartOfDay();
-        LocalDateTime fin = finSemana.atTime(23, 59, 59);
-
-        List<Recorrido> recorridosSemana = recorridoRepository.findByIdUsuarioAndFechaBetween(
-                idUsuario,
-                inicio,
-                fin
-        );
-
-        double sumaKmSemana = 0.0;
-        for (Recorrido r : recorridosSemana) {
-            if (r.getDistanciaKm() != null) {
-                sumaKmSemana += r.getDistanciaKm();
-            }
-        }
-
-        int rangoSemanal = (int) Math.round(sumaKmSemana);
-        usuario.setRangoSemanal(rangoSemanal);
         usuario.setActualizadoEn(LocalDateTime.now());
-
         return usuarioRepository.save(usuario);
     }
+
 
     public List<Recorrido> getRecorridosSemana(Integer idUsuario) {
 

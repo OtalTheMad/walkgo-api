@@ -2,22 +2,22 @@ package org.walkgo.api.model;
 
 public class FinalizarRecorridoRequest {
 
-    private Double _distanciaSesionKm;
-    private Integer _pasosSesion;
+    private Double distanciaSesionKm;
+    private Integer pasosSesion;
 
-    public Double GetDistanciaSesionKm() {
-        return _distanciaSesionKm;
+    public Double getDistanciaSesionKm() {
+        return distanciaSesionKm;
     }
 
-    public void SetDistanciaSesionKm(Double _distanciaSesionKm) {
-        this._distanciaSesionKm = _distanciaSesionKm;
+    public void setDistanciaSesionKm(Double distanciaSesionKm) {
+        this.distanciaSesionKm = distanciaSesionKm;
     }
 
-    public Integer GetPasosSesion() {
-        return _pasosSesion;
+    public Integer getPasosSesion() {
+        return pasosSesion;
     }
 
-    public void SetPasosSesion(Integer _pasosSesion) {
-        this._pasosSesion = _pasosSesion;
+    public void setPasosSesion(Integer pasosSesion) {
+        this.pasosSesion = pasosSesion;
     }
 }
