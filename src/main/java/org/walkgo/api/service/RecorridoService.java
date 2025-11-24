@@ -4,8 +4,10 @@ import org.springframework.stereotype.Service;
 import org.walkgo.api.model.FinalizarRecorridoRequest;
 import org.walkgo.api.model.Recorrido;
 import org.walkgo.api.model.Usuario;
+import org.walkgo.api.model.Estadisticas;
 import org.walkgo.api.repository.RecorridoRepository;
 import org.walkgo.api.repository.UsuarioRepository;
+import org.walkgo.api.repository.EstadisticasRepository;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -17,10 +19,14 @@ public class RecorridoService {
 
     private final RecorridoRepository recorridoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EstadisticasRepository estadisticasRepository;
 
-    public RecorridoService(RecorridoRepository recorridoRepository, UsuarioRepository usuarioRepository) {
+    public RecorridoService(RecorridoRepository recorridoRepository,
+                            UsuarioRepository usuarioRepository,
+                            EstadisticasRepository estadisticasRepository) {
         this.recorridoRepository = recorridoRepository;
         this.usuarioRepository = usuarioRepository;
+        this.estadisticasRepository = estadisticasRepository;
     }
 
     public Usuario finalizarRecorrido(Integer idUsuario, FinalizarRecorridoRequest req) {
@@ -63,12 +69,31 @@ public class RecorridoService {
         }
         usuario.setTotalPasosSemanales(totalPasosSemanaActual + pasosSesion);
 
-        // Aquí mantienes tu lógica de rango semanal que ya tenías implementada
-
         usuario.setActualizadoEn(LocalDateTime.now());
-        return usuarioRepository.save(usuario);
-    }
+        usuarioRepository.save(usuario);
 
+        Estadisticas estadistica = estadisticasRepository.findByIdUsuario(idUsuario)
+                .orElseGet(() -> {
+                    Estadisticas nueva = new Estadisticas();
+                    nueva.setId_usuario(idUsuario);
+                    nueva.setKm_recorrido(0);
+                    nueva.setCalorias_quemadas("0");
+                    nueva.setClasificacion("principiante");
+                    nueva.setEstado("activo");
+                    return estadisticasRepository.save(nueva);
+                });
+
+        Integer kmAcumulados = estadistica.getKm_recorrido();
+        if (kmAcumulados == null) {
+            kmAcumulados = 0;
+        }
+
+        int kmSesionRedondeados = distanciaSesion != null ? distanciaSesion.intValue() : 0;
+        estadistica.setKm_recorrido(kmAcumulados + kmSesionRedondeados);
+        estadisticasRepository.save(estadistica);
+
+        return usuario;
+    }
 
     public List<Recorrido> getRecorridosSemana(Integer idUsuario) {
 
