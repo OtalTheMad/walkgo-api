@@ -55,7 +55,8 @@ public class RecorridoService {
         if (totalDistanciaActual == null) {
             totalDistanciaActual = 0.0;
         }
-        usuario.setTotalDistanciaKm(totalDistanciaActual + distanciaSesion);
+        Double nuevaDistanciaTotal = totalDistanciaActual + distanciaSesion;
+        usuario.setTotalDistanciaKm(nuevaDistanciaTotal);
 
         Integer totalPasosActual = usuario.getTotalPasos();
         if (totalPasosActual == null) {
@@ -83,13 +84,12 @@ public class RecorridoService {
                     return estadisticasRepository.save(nueva);
                 });
 
-        Integer kmAcumulados = estadistica.getKm_recorrido();
-        if (kmAcumulados == null) {
-            kmAcumulados = 0;
+        Double totalKmUsuario = usuario.getTotalDistanciaKm();
+        if (totalKmUsuario == null) {
+            totalKmUsuario = 0.0;
         }
-
-        int kmSesionRedondeados = distanciaSesion != null ? distanciaSesion.intValue() : 0;
-        estadistica.setKm_recorrido(kmAcumulados + kmSesionRedondeados);
+        int kmEnterosTotales = (int) Math.floor(totalKmUsuario);
+        estadistica.setKm_recorrido(kmEnterosTotales);
         estadisticasRepository.save(estadistica);
 
         return usuario;
