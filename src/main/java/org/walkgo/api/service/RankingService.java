@@ -2,7 +2,7 @@ package org.walkgo.api.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.walkgo.api.dto.RankingResponse;
+import org.walkgo.api.model.RankingResponse;
 import org.walkgo.api.model.RankingEntry;
 import org.walkgo.api.model.Usuario;
 import org.walkgo.api.repository.RankingRepository;
