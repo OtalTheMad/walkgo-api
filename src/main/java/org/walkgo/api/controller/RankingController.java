@@ -2,7 +2,7 @@ package org.walkgo.api.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.walkgo.api.model.RankingResponse;
+import org.walkgo.api.model.RankingRow;
 import org.walkgo.api.service.RankingService;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class RankingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RankingResponse>> getRanking() {
+    public ResponseEntity<List<RankingRow>> getRanking() {
         return ResponseEntity.ok(rankingService.getRanking());
     }
 }
