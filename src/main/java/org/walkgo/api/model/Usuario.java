@@ -21,7 +21,7 @@ public class Usuario {
     @Column(name = "total_pasos", nullable = false)
     private Integer _total_pasos = 0;
 
-    @Column(name = "total_distancia_km", nullable = false, columnDefinition = "DECIMAL(65,0) DEFAULT 0")
+    @Column(name = "total_distancia_km", nullable = false)
     private Double _total_distancia_km = 0.0;
 
     @Column(name = "total_pasos_semanales", nullable = false)
