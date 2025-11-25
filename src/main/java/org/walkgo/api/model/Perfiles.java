@@ -16,7 +16,7 @@ public class Perfiles {
     private Integer id_usuario;
 
     @Lob
-    @Column(name = "foto")
+    @Column(name = "foto", columnDefinition = "MEDIUMBLOB")
     private byte[] foto;
 
     @Column(name = "pais")
