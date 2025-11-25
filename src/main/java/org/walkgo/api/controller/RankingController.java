@@ -1,9 +1,8 @@
 package org.walkgo.api.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.walkgo.api.model.RankingEntry;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.walkgo.api.dto.RankingResponse;
 import org.walkgo.api.service.RankingService;
 
 import java.util.List;
@@ -18,8 +17,8 @@ public class RankingController {
         this.rankingService = rankingService;
     }
 
-    @GetMapping("/semana")
-    public List<RankingEntry> getRankingSemana() {
-        return rankingService.getRankingSemana();
+    @GetMapping
+    public ResponseEntity<List<RankingResponse>> getRanking() {
+        return ResponseEntity.ok(rankingService.getRanking());
     }
 }

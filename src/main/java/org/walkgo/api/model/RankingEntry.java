@@ -1,40 +1,35 @@
 package org.walkgo.api.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "ranking")
 public class RankingEntry {
 
-    private Integer userId;
-    private String usuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ranking")
+    private Integer idRanking;
+
+    @Column(name = "id_usuario", nullable = false)
+    private Integer idUsuario;
+
+    @Column(name = "posicion", nullable = false)
     private Integer posicion;
-    private Integer rangoSemanal;
-    private Double totalDistanciaKm;
-    private String avatar;
 
-    public RankingEntry() {
+    @Column(name = "estado", nullable = false, length = 10)
+    private String estado;
+
+    public Integer getIdRanking() {
+        return idRanking;
     }
 
-    public RankingEntry(Integer userId, String usuario, Integer posicion, Integer rangoSemanal, Double totalDistanciaKm, String avatar) {
-        this.userId = userId;
-        this.usuario = usuario;
-        this.posicion = posicion;
-        this.rangoSemanal = rangoSemanal;
-        this.totalDistanciaKm = totalDistanciaKm;
-        this.avatar = avatar;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public Integer getPosicion() {
@@ -45,27 +40,11 @@ public class RankingEntry {
         this.posicion = posicion;
     }
 
-    public Integer getRangoSemanal() {
-        return rangoSemanal;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setRangoSemanal(Integer rangoSemanal) {
-        this.rangoSemanal = rangoSemanal;
-    }
-
-    public Double getTotalDistanciaKm() {
-        return totalDistanciaKm;
-    }
-
-    public void setTotalDistanciaKm(Double totalDistanciaKm) {
-        this.totalDistanciaKm = totalDistanciaKm;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }
